@@ -137,14 +137,10 @@ class RouteHelper {
   static String getOnBoardingRoute() => '$onBoarding';
   static String getSignInRoute(String page) => '$signIn?page=$page';
   static String getSignUpRoute() => '$signUp';
-  static String getVerificationRoute(String number, String token, String page, String pass,SignUpBody signUpBody) {
-    String _data ;
+  static String getVerificationRoute(String number, String token, String page, String pass) {
 
-    if(signUpBody !=null){
-       _data = base64Encode(utf8.encode(jsonEncode(signUpBody.toJson())));
-    }
 
-    return '$verification?page=$page&number=$number&token=$token&pass=$pass&signupbody=${signUpBody !=null ? _data : null}';
+    return '$verification?page=$page&number=$number&token=$token&pass=$pass';
   }
   static String getAccessLocationRoute(String page) => '$accessLocation?page=$page';
   static String getPickMapRoute(String page, bool canRoute) => '$pickMap?page=$page&route=${canRoute.toString()}';
@@ -257,19 +253,9 @@ class RouteHelper {
     GetPage(name: verification, page: () {
       List<int> _decode = base64Decode(Get.parameters['pass'].replaceAll(' ', '+'));
       String _data = utf8.decode(_decode);
-
-
-      SignUpBody _data2;
-
-      if(Get.parameters['page'] == signUp){
-        List<int> _decode2 = base64Decode(Get.parameters['signupbody'].replaceAll(' ', '+'));
-        _data2 = SignUpBody.fromJson(jsonDecode(utf8.decode(_decode2)));
-      }
-
-
       return VerificationScreen(
         number: Get.parameters['number'], fromSignUp: Get.parameters['page'] == signUp, token: Get.parameters['token'],
-        password: _data,signUpBody: _data2,
+        password: _data,
       );
     }),
     GetPage(name: accessLocation, page: () => AccessLocationScreen(

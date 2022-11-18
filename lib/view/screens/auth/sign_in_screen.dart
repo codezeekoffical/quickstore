@@ -251,7 +251,7 @@ class _SignInScreenState extends State<SignInScreen> {
           if(Get.find<SplashController>().configModel.customerVerification && int.parse(status.message[0]) == 0) {
             List<int> _encoded = utf8.encode(_password);
             String _data = base64Encode(_encoded);
-            Get.toNamed(RouteHelper.getVerificationRoute(_numberWithCountryCode, _token, RouteHelper.signUp, _data,null));
+            Get.toNamed(RouteHelper.getVerificationRoute(_numberWithCountryCode, _token, RouteHelper.signUp, _data));
           }else {
             Get.toNamed(RouteHelper.getAccessLocationRoute('sign-in'));
           }
